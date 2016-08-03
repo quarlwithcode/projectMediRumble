@@ -8,7 +8,8 @@ public class Resetter : MonoBehaviour {
 	
 	private float resetSpeedSqr;			//	The square value of Reset Speed, for efficient calculation
 	private SpringJoint2D spring;			//	The SpringJoint2D component which is destroyed when the projectile is launched
-	
+	private ProjectileDragging pDrag;
+	public Vector3 startPosition;
 	void Start ()
 	{
 		//	Calculate the Resset Speed Squared from the Reset Speed
@@ -16,6 +17,11 @@ public class Resetter : MonoBehaviour {
 
 		//	Get the SpringJoint2D component through our reference to the GameObject's Rigidbody
 		spring = projectile.GetComponent <SpringJoint2D>();
+
+		pDrag = projectile.GetComponent<ProjectileDragging> ();
+
+		//	Get the starting position of the game object
+		startPosition = projectile.transform.position;
 	}
 	
 	void Update () {
@@ -42,6 +48,12 @@ public class Resetter : MonoBehaviour {
 	
 	void Reset () {
 		//	The reset function will Reset the game by reloading the same level
-		Application.LoadLevel (Application.loadedLevel);
+		//Application.LoadLevel (Application.loadedLevel);
+		projectile.isKinematic = true;
+		projectile.transform.position = startPosition;
+		pDrag.catapultLineFront.enabled = true;
+		pDrag.catapultLineBack.enabled = true;
+		spring.enabled = true;
+
 	}
 }

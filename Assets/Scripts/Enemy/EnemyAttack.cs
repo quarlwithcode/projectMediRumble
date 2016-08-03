@@ -8,6 +8,7 @@ public class EnemyAttack : MonoBehaviour {
 	public float attackRange;
 	public float attackRate;
 	public bool inRange;
+	public LayerMask attackLayer;
 
 	private GameObject target;
 
@@ -39,10 +40,11 @@ public class EnemyAttack : MonoBehaviour {
 	}
 
 	void AutoAttack(){
-		print ("shot");
+		print ("attack");
 		Vector2 rayOrigin = new Vector2 (transform.position.x + .51f, transform.position.y);
-		RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right);
+		RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right, 50f, attackLayer);
 		if (inRange) {
+			print (hit.transform.name);
 			if (hit.transform.tag == "Castle") {
 				print ("Hit");
 				HealthController castleHealth = hit.transform.gameObject.GetComponent<HealthController> ();

@@ -35,7 +35,9 @@ public class ProjectileDragging : MonoBehaviour {
 		
 		if (spring != null) {
 			if (!GetComponent<Rigidbody2D>().isKinematic && prevVelocity.sqrMagnitude > GetComponent<Rigidbody2D>().velocity.sqrMagnitude) {
-				Destroy (spring);
+				spring.enabled = false;
+				catapultLineFront.enabled = false;
+				catapultLineBack.enabled = false;
 				GetComponent<Rigidbody2D>().velocity = prevVelocity;
 			}
 			
@@ -53,9 +55,12 @@ public class ProjectileDragging : MonoBehaviour {
 	void LineRendererSetup () {
 		catapultLineFront.SetPosition(0, catapultLineFront.transform.position);
 		catapultLineBack.SetPosition(0, catapultLineBack.transform.position);
+
 		
 		catapultLineFront.sortingLayerName = "Foreground";
+		catapultLineFront.sortingLayerID = SortingLayer.NameToID("Foreground");
 		catapultLineBack.sortingLayerName = "Foreground";
+		catapultLineBack.sortingLayerID = SortingLayer.NameToID("Foreground");
 		
 		catapultLineFront.sortingOrder = 3;
 		catapultLineBack.sortingOrder = 1;
