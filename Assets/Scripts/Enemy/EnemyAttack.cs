@@ -7,16 +7,14 @@ public class EnemyAttack : MonoBehaviour {
 	public int attackDamage;
 	public float attackRange;
 	public float attackRate;
+	public Transform target;
 	public bool inRange;
 	public LayerMask attackLayer;
-
-	private GameObject target;
 
 
 	// Use this for initialization
 	void Start () {
 		inRange = false;
-		target = GameObject.FindGameObjectWithTag ("Castle");
 
 		InvokeRepeating ("CheckRange", 0f, 0.1f);
 	}
@@ -31,7 +29,7 @@ public class EnemyAttack : MonoBehaviour {
 
 	void CheckRange(){
 		print ("Checking... ");
-		if (Vector3.Distance (transform.position, target.transform.position) <= attackRange) {
+		if (Vector3.Distance (transform.position, target.position) <= .2F) {
 			print ("In Range");
 			inRange = true;
 			InvokeRepeating ("AutoAttack", 0f, attackRate);

@@ -23,6 +23,9 @@ public class EnemyMovement : MonoBehaviour {
 		if (attackController.inRange) {
 			LeanTween.cancel (gameObject);
 		}
+	}
 
+	void OnDisable(){
+		LeanTween.cancel (gameObject);
 	}
 }
