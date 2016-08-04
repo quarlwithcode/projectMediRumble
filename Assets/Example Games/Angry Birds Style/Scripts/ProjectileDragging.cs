@@ -40,12 +40,12 @@ public class ProjectileDragging : MonoBehaviour {
 				spring.enabled = false;
 				catapultLineFront.enabled = false;
 				catapultLineBack.enabled = false;
-				print (prevVelocity);
+				//print (prevVelocity);
 				if (!launched) {
 					GetComponent<Rigidbody2D> ().AddForce (prevVelocity*velocityMultiplier, ForceMode2D.Impulse);
 					launched = true;
 				}
-				print (GetComponent<Rigidbody2D> ().velocity);
+				//print (GetComponent<Rigidbody2D> ().velocity);
 			}
 			
 			if (!clickedOn)

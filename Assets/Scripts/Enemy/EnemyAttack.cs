@@ -14,6 +14,8 @@ public class EnemyAttack : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		target = GameObject.FindGameObjectWithTag ("Castle").GetComponent<Transform>();
+
 		inRange = false;
 
 		InvokeRepeating ("CheckRange", 0f, 0.1f);
@@ -28,9 +30,10 @@ public class EnemyAttack : MonoBehaviour {
 
 
 	void CheckRange(){
-		print ("Checking... ");
-		if (Vector3.Distance (transform.position, target.position) <= .2F) {
-			print ("In Range");
+		//print (transform.position.x + "vs" + target.position.x);
+
+		if (Vector3.Distance (transform.position, target.position) <= attackRange) {
+			//print ("In Range");
 			inRange = true;
 			InvokeRepeating ("AutoAttack", 0f, attackRate);
 			CancelInvoke ("CheckRange");
@@ -38,13 +41,13 @@ public class EnemyAttack : MonoBehaviour {
 	}
 
 	void AutoAttack(){
-		print ("attack");
+		//print ("attack");
 		Vector2 rayOrigin = new Vector2 (transform.position.x + .51f, transform.position.y);
 		RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.right, 50f, attackLayer);
 		if (inRange) {
-			print (hit.transform.name);
+			//print (hit.transform.name);
 			if (hit.transform.tag == "Castle") {
-				print ("Hit");
+				//print ("Hit");
 				HealthController castleHealth = hit.transform.gameObject.GetComponent<HealthController> ();
 				castleHealth.Damage (attackDamage);
 			}

@@ -11,6 +11,7 @@ public class EnemyMovement : MonoBehaviour {
 	private EnemyAttack attackController;
 	// Use this for initialization
 	void Start () {
+		attackStop = GameObject.FindGameObjectWithTag ("MeleeStopPoint").GetComponent<Transform>();
 		LeanTween.init (800);
 		attackController = GetComponent<EnemyAttack> ();
 
