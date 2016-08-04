@@ -53,6 +53,7 @@ public class Resetter : MonoBehaviour {
 		projectile.transform.position = startPosition;
 		pDrag.catapultLineFront.enabled = true;
 		pDrag.catapultLineBack.enabled = true;
+		pDrag.launched = false;
 		spring.enabled = true;
 
 	}

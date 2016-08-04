@@ -2,6 +2,7 @@
 
 public class ProjectileDragging : MonoBehaviour {
 	public float maxStretch = 3.0f;
+	public float velocityMultiplier;
 	public LineRenderer catapultLineFront;
 	public LineRenderer catapultLineBack;  
 	
@@ -13,7 +14,7 @@ public class ProjectileDragging : MonoBehaviour {
 	private float circleRadius;
 	private bool clickedOn;
 	private Vector2 prevVelocity;
-	
+	public bool launched;
 	
 	void Awake () {
 		spring = GetComponent <SpringJoint2D> ();
@@ -27,6 +28,7 @@ public class ProjectileDragging : MonoBehaviour {
 		maxStretchSqr = maxStretch * maxStretch;
 		CircleCollider2D circle = GetComponent<Collider2D>() as CircleCollider2D;
 		circleRadius = circle.radius;
+		launched = false;
 	}
 	
 	void Update () {
@@ -38,7 +40,12 @@ public class ProjectileDragging : MonoBehaviour {
 				spring.enabled = false;
 				catapultLineFront.enabled = false;
 				catapultLineBack.enabled = false;
-				GetComponent<Rigidbody2D>().velocity = prevVelocity;
+				print (prevVelocity);
+				if (!launched) {
+					GetComponent<Rigidbody2D> ().AddForce (prevVelocity*velocityMultiplier, ForceMode2D.Impulse);
+					launched = true;
+				}
+				print (GetComponent<Rigidbody2D> ().velocity);
 			}
 			
 			if (!clickedOn)

@@ -10,7 +10,6 @@ public class UIManager : MonoBehaviour {
 		Time.timeScale = 0;
 		startMenu = GameObject.FindGameObjectWithTag ("StartMenu");
 		showStartMenu ();
-
 		print ("ran");
 	}
 	
