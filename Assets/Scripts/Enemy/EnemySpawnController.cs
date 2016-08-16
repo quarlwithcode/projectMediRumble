@@ -3,14 +3,16 @@ using System.Collections;
 
 public class EnemySpawnController : MonoBehaviour {
 
-	public GameObject enemy;
-	public int enemyCount;
+	public GameObject[] enemies;
+	public int enemyMetric;
+	private int wave;
 	public float spawnWait;
 	public float startWait;
 	public float waveWait;
 
 	void Start ()
-	{
+	{	
+		wave = 1;
 		StartCoroutine (SpawnWaves ());
 	}
 
@@ -21,13 +23,35 @@ public class EnemySpawnController : MonoBehaviour {
 //		print ("spawn running1");
 		while (true)
 		{
+			int difficultyCap = wave;
+
+			if (difficultyCap >= enemies.Length) {
+				difficultyCap = enemies.Length;
+			}
+
+			int difficultyPoints = wave * enemyMetric;
+
+			print (difficultyCap);
+			print (difficultyPoints);
+
 //			print ("spawn running2");
-			for (int i = 0; i < enemyCount; i++)
+			while(difficultyPoints > 0)
 			{
-				Instantiate (enemy, transform.position, Quaternion.identity);
+				int randEnemy = Random.Range (0, difficultyCap);
+				int enemyDifficulty = enemies [randEnemy].GetComponent<EnemyAttack> ().difficulty;
+				if (difficultyPoints - enemyDifficulty >= 0) {
+					difficultyPoints -= enemyDifficulty;
+					Instantiate (enemies [randEnemy], transform.position, Quaternion.identity);
+				} else if(difficultyPoints > 0) {
+					difficultyPoints -= enemies [0].GetComponent<EnemyAttack> ().difficulty;
+					Instantiate (enemies [0], transform.position, Quaternion.identity);
+				}
+
 //				print ("enemy spawned");
 				yield return new WaitForSeconds (spawnWait);
 			}
+
+			wave++;
 			yield return new WaitForSeconds (waveWait);
 		}
 //		print ("spawn ran");

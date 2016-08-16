@@ -15,6 +15,17 @@ public class HealthController : MonoBehaviour {
 		alive = true;
 	}
 
+	protected virtual void Update () {
+		if (currentHealth <= 0) {
+			currentHealth = 0;
+		}
+
+		if (currentHealth <= 0 && alive) {
+			Kill ();
+			alive = false;
+		}
+	}
+
 	public virtual void Restore(int restoration){
 		currentHealth += restoration;
 	}

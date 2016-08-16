@@ -16,7 +16,7 @@ public class EnemyHealthController : HealthController {
 		rig2D = GetComponent<Rigidbody2D> ();
 	}
 
-	protected virtual void Update(){
+	protected override void Update(){
 		if (currentHealth <= 0 && alive) {
 			Kill ();
 			alive = false;

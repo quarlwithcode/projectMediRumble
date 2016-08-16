@@ -31,8 +31,10 @@ public class Resetter : MonoBehaviour {
 			Reset ();
 		}
 
+		//print (projectile.velocity.x);
+
 		//	If the spring had been destroyed (indicating we have launched the projectile) and our projectile's velocity is below the threshold...
-		if (spring == null && projectile.velocity.sqrMagnitude < resetSpeedSqr) {
+		if (!spring.enabled && Mathf.Abs(projectile.velocity.x) < .5f) {
 			//	... call the Reset() function
 			Reset ();
 		}
@@ -46,15 +48,20 @@ public class Resetter : MonoBehaviour {
 		}
 	}
 	
-	void Reset () {
+	public void Reset () {
 		//	The reset function will Reset the game by reloading the same level
 		//Application.LoadLevel (Application.loadedLevel);
 		projectile.isKinematic = true;
 		projectile.transform.position = startPosition;
-		pDrag.catapultLineFront.enabled = true;
-		pDrag.catapultLineBack.enabled = true;
+		StartCoroutine (DelayLineRenderers ());
 		pDrag.launched = false;
 		spring.enabled = true;
 
+	}
+
+	public IEnumerator DelayLineRenderers(){
+		yield return new WaitForSeconds(.05F);
+		pDrag.catapultLineFront.enabled = true;
+		pDrag.catapultLineBack.enabled = true;
 	}
 }

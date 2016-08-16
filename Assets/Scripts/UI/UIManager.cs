@@ -4,18 +4,33 @@ using System.Collections;
 public class UIManager : MonoBehaviour {
 	private bool lvlStarted;
 	private GameObject startMenu;
+	public GameObject gameOverMenu;
 	// Use this for initialization
 	void Start () {
 		lvlStarted = false;
 		Time.timeScale = 0;
 		startMenu = GameObject.FindGameObjectWithTag ("StartMenu");
+
+		if (gameOverMenu == null) {
+			gameOverMenu = GameObject.FindGameObjectWithTag ("GameOverMenu");
+		}
+
 		showStartMenu ();
+		hideGameOverMenu ();
 		print ("ran");
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		
+	}
+
+	public void hideGameOverMenu(){
+		gameOverMenu.SetActive (false);
+	}
+
+	public void showGameOverMenu(){
+		gameOverMenu.SetActive (true);
 	}
 
 	private void hideStartMenu(){

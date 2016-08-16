@@ -15,7 +15,7 @@ public class ProjectileDragging : MonoBehaviour {
 	private bool clickedOn;
 	private Vector2 prevVelocity;
 	public bool launched;
-	
+	public bool isShatterShot;
 	void Awake () {
 		spring = GetComponent <SpringJoint2D> ();
 		catapult = spring.connectedBody.transform;
@@ -40,7 +40,7 @@ public class ProjectileDragging : MonoBehaviour {
 				spring.enabled = false;
 				catapultLineFront.enabled = false;
 				catapultLineBack.enabled = false;
-				//print (prevVelocity);
+				print (prevVelocity);
 				if (!launched) {
 					GetComponent<Rigidbody2D> ().AddForce (prevVelocity*velocityMultiplier, ForceMode2D.Impulse);
 					launched = true;
@@ -52,7 +52,8 @@ public class ProjectileDragging : MonoBehaviour {
 				prevVelocity = GetComponent<Rigidbody2D>().velocity;
 			
 			LineRendererUpdate ();
-			
+
+
 		} else {
 			catapultLineFront.enabled = false;
 			catapultLineBack.enabled = false;

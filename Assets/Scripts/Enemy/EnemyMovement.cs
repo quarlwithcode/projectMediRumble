@@ -3,15 +3,16 @@ using System.Collections;
 
 public class EnemyMovement : MonoBehaviour {
 
-	public Transform attackStop;
+	protected Transform attackStop;
 	public float movementTimeMin;
 	public float movementTimeMax;
 
-	private float movementTime;
-	private EnemyAttack attackController;
+	protected float movementTime;
+	protected EnemyAttack attackController;
 	// Use this for initialization
-	void Start () {
-		attackStop = GameObject.FindGameObjectWithTag ("MeleeStopPoint").GetComponent<Transform>();
+	protected virtual void Start () {
+		if(attackStop == null)
+			attackStop = GameObject.Find("MeleeStopPoint").GetComponent<Transform>();
 		LeanTween.init (800);
 		attackController = GetComponent<EnemyAttack> ();
 
@@ -20,13 +21,13 @@ public class EnemyMovement : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate () {
+	protected virtual void FixedUpdate () {
 		if (attackController.inRange) {
 			LeanTween.cancel (gameObject);
 		}
 	}
 
-	void OnDisable(){
+	protected virtual void OnDisable(){
 		LeanTween.cancel (gameObject);
 	}
 }
