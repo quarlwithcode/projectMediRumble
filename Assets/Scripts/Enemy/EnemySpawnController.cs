@@ -5,7 +5,7 @@ public class EnemySpawnController : MonoBehaviour {
 
 	public GameObject[] enemies;
 	public int enemyMetric;
-	private int wave;
+	public int wave;
 	public float spawnWait;
 	public float startWait;
 	public float waveWait;
@@ -51,8 +51,9 @@ public class EnemySpawnController : MonoBehaviour {
 				yield return new WaitForSeconds (spawnWait);
 			}
 
-			wave++;
+
 			yield return new WaitForSeconds (waveWait);
+			wave++;
 		}
 //		print ("spawn ran");
 	}

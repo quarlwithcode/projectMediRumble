@@ -3,16 +3,17 @@ using System.Collections;
 
 public class EnemyHealthController : HealthController {
 
-	private EnemyMovement movementController;
-	private EnemyAttack attackController;
-	private Rigidbody2D rig2D;
+	protected EnemyMovement movementController;
+	protected EnemyAttack attackController;
+	protected EnemyPoints pointsController;
+	protected Rigidbody2D rig2D;
 
 	protected override void Start ()
 	{
 		base.Start ();
 		movementController = GetComponent<EnemyMovement> ();
 		attackController = GetComponent<EnemyAttack> ();
-
+		pointsController = GetComponent<EnemyPoints> ();
 		rig2D = GetComponent<Rigidbody2D> ();
 	}
 
@@ -31,6 +32,7 @@ public class EnemyHealthController : HealthController {
 	public virtual IEnumerator delayKill(float time){
 		movementController.enabled = false;
 		attackController.enabled = false;
+		pointsController.addPoints ();
 		rig2D.isKinematic = false;
 		rig2D.AddForce (Vector2.up*5, ForceMode2D.Impulse);
 		yield return new WaitForSeconds (time);

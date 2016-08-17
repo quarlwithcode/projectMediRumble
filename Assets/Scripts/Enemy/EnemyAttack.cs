@@ -29,6 +29,10 @@ public class EnemyAttack : MonoBehaviour {
 
 	}
 
+	protected virtual void OnDisable(){
+		CancelInvoke ();
+	}
+
 
 	protected virtual void CheckRange(){
 		//print ("checking for " + target.name);
