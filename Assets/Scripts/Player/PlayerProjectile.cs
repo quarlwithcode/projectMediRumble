@@ -5,12 +5,18 @@ public class PlayerProjectile : MonoBehaviour {
 
 	public int damage;
 
-	protected Resetter bounds;
+	public Resetter bounds;
 	protected ProjectileDragging pDragging;
+	protected ProjectileHealthController health;
 
 	protected virtual void Start(){
 		bounds = GameObject.FindGameObjectWithTag ("Bounds").GetComponent<Resetter> ();
 		pDragging = GetComponent<ProjectileDragging> ();
+		health = GetComponent<ProjectileHealthController> ();
+
+	}
+
+	protected virtual void Update () {
 	}
 
 	protected virtual void OnTriggerEnter2D(Collider2D other){

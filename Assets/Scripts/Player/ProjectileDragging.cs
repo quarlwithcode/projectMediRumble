@@ -16,9 +16,14 @@ public class ProjectileDragging : MonoBehaviour {
 	private Vector2 prevVelocity;
 	public bool launched;
 	public bool isShatterShot;
+	public bool isExplodingShot;
+
+	private Vector3 startPos;
 	void Awake () {
 		spring = GetComponent <SpringJoint2D> ();
 		catapult = spring.connectedBody.transform;
+
+		startPos = transform.position;
 	}
 	
 	void Start () {
@@ -40,8 +45,9 @@ public class ProjectileDragging : MonoBehaviour {
 				spring.enabled = false;
 				catapultLineFront.enabled = false;
 				catapultLineBack.enabled = false;
-				//print (prevVelocity);
+
 				if (!launched) {
+					//print (prevVelocity);
 					GetComponent<Rigidbody2D> ().AddForce (prevVelocity*velocityMultiplier, ForceMode2D.Impulse);
 					launched = true;
 				}
@@ -57,6 +63,15 @@ public class ProjectileDragging : MonoBehaviour {
 		} else {
 			catapultLineFront.enabled = false;
 			catapultLineBack.enabled = false;
+		}
+
+		if (Vector3.Distance(transform.position, startPos) < 0.0001f && !clickedOn) {
+			launched = false;
+		}
+
+		if (isShatterShot && GetComponent<Rigidbody2D>().velocity == Vector2.zero && !clickedOn) {
+			GetComponent<ShatterProjectile> ().CancelCoroutines ();
+			launched = false;
 		}
 	}
 	

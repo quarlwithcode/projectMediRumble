@@ -54,6 +54,7 @@ public class EnemySpawnController : MonoBehaviour {
 
 			yield return new WaitForSeconds (waveWait);
 			wave++;
+			yield return new WaitForSeconds (startWait);
 		}
 //		print ("spawn ran");
 	}
