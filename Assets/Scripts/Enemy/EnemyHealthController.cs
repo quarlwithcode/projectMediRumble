@@ -24,8 +24,14 @@ public class EnemyHealthController : HealthController {
 		}
 	}
 
+	protected virtual void onKill ()
+	{
+		return;
+	}
+
 	public override void Kill ()
 	{
+		onKill ();
 		StartCoroutine (delayKill(2f));
 	}
 

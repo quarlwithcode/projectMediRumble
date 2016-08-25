@@ -25,7 +25,7 @@ public class LeafSpawner : MonoBehaviour {
 				Vector3 spawnPosition = new Vector3 (transform.position.x+Random.Range(-leafRange/2, (leafRange/2)+1),
 														transform.position.y,
 															transform.position.z);
-				print (spawnPosition.x);
+				//print (spawnPosition.x);
 				Quaternion spawnRotation = Quaternion.identity;
 
 

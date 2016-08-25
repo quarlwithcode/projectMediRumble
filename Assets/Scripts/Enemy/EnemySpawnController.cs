@@ -31,8 +31,8 @@ public class EnemySpawnController : MonoBehaviour {
 
 			int difficultyPoints = wave * enemyMetric;
 
-			print (difficultyCap);
-			print (difficultyPoints);
+			//print (difficultyCap);
+			//print (difficultyPoints);
 
 //			print ("spawn running2");
 			while(difficultyPoints > 0)

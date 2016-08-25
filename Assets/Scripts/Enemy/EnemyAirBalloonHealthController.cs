@@ -4,14 +4,22 @@ using System.Collections;
 public class EnemyAirBalloonHealthController : EnemyHealthController {
 
 	public GameObject drop;
-	[Range(0F,1F)] public float dropChance;
+	private bool dropped = false;
+	[Range(0,100)] public float dropChance;
 
-	public override IEnumerator delayKill (float time)
+	protected override void onKill ()
 	{
-		float check = Random.Range (0F, 1F);
-		if (check < dropChance) {
-			Instantiate (drop, transform.position, transform.rotation);
+		if (currentHealth <= 0 && !dropped) {
+			float check = Random.Range (0, 100);
+			print (dropChance);
+			print (check);
+			if (check < dropChance) {
+				print (true);
+				GameObject dropClone;
+				dropClone = Instantiate (drop, transform.position, transform.rotation) as GameObject;
+				print (dropClone.name);
+				dropped = true;
+			}
 		}
-		return base.delayKill (time);
 	}
 }

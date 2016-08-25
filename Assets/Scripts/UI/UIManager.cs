@@ -67,7 +67,6 @@ public class UIManager : MonoBehaviour {
 
 	public void quitUnlock1(){
 		Time.timeScale = 1;
-		unlockProjectileButton (1);
 		hideUnlock1 ();
 	}
 
@@ -86,7 +85,6 @@ public class UIManager : MonoBehaviour {
 
 	public void quitUnlock2(){
 		Time.timeScale = 1;
-		unlockProjectileButton (2);
 		hideUnlock2 ();
 	}
 

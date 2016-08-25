@@ -65,7 +65,7 @@ public class Resetter : MonoBehaviour {
 		projectile.isKinematic = true;
 		if (pDrag.isShatterShot && pDrag.launched) {
 			GameObject.Find ("UIManager").GetComponent<ProjectileSwitcher> ().lowerScatterAmmo (1);
-			print ("yo");
+			//print ("yo");
 			projectile.gameObject.GetComponent<ShatterProjectile> ().CancelCoroutines ();
 		}
 
@@ -73,7 +73,7 @@ public class Resetter : MonoBehaviour {
 			GameObject.Find ("UIManager").GetComponent<ProjectileSwitcher> ().lowerExplodingAmmo (1);
 		} 
 		pDrag.launched = false;
-		print (pDrag.isShatterShot);
+		//print (pDrag.isShatterShot);
 
 		projectile.transform.position = startPosition;
 		StartCoroutine (DelayLineRenderers ());

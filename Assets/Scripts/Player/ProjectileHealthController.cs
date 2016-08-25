@@ -17,12 +17,6 @@ public class ProjectileHealthController : HealthController {
 		projectile.bounds.Reset ();
 	}
 
-	protected virtual void OnTriggerEnter2D(Collider2D other){
-		if (other.gameObject.tag == "Enemy") {
-			Damage(1);
-		}
-	}
-
 	protected virtual void OnCollisionEnter2D(Collision2D col){
 		if (col.gameObject.tag == "Ground") {
 			Kill ();

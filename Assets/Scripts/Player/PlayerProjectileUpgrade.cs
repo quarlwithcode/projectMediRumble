@@ -8,6 +8,7 @@ public class PlayerProjectileUpgrade : MonoBehaviour {
 	public int[] upgradeLevels;
 	private bool[] upgradeShot;
 	private bool[] hasUpgraded;
+	private bool[] hasShownUnlock;
 	public UIManager uiManager;
 	// Use this for initialization
 	void Start () {
@@ -20,10 +21,12 @@ public class PlayerProjectileUpgrade : MonoBehaviour {
 
 		upgradeShot = new bool[upgradeLevels.Length];
 		hasUpgraded = new bool[upgradeLevels.Length];
+		hasShownUnlock = new bool[upgradeLevels.Length];
 
 		for (int i = 0; i < upgradeShot.Length; i++) {
 			upgradeShot [i] = false;
 			hasUpgraded[i] = false;
+			hasShownUnlock[i] = false;
 		}
 
 	}
@@ -32,15 +35,14 @@ public class PlayerProjectileUpgrade : MonoBehaviour {
 	void Update () {
 		if (CheckUpgrade ()) {
 			pDrag = GameObject.Find ("UIManager").GetComponent<ProjectileSwitcher> ().playerProjectile.GetComponent<ProjectileDragging> ();
-			if(pDrag.launched)
-				Upgrade ();
+			Upgrade ();
 		}
 
 	}
 
 	bool CheckUpgrade(){
 		for (int i = 0; i < upgradeLevels.Length; i++) {
-			if (playerLevel.currentLevel == upgradeLevels [i] && !hasUpgraded[i]) {
+			if (playerLevel.currentLevel == upgradeLevels [i] && !hasShownUnlock[i]) {
 				upgradeShot [i] = true;
 				return upgradeShot [i];
 			}
@@ -51,11 +53,19 @@ public class PlayerProjectileUpgrade : MonoBehaviour {
 
 	void Upgrade(){
 		if (playerLevel.currentLevel == upgradeLevels [0] && !hasUpgraded[0]) {
-			uiManager.showUnlock1 ();
+			uiManager.unlockProjectileButton (1);
 			hasUpgraded[0] = true;
 		} else if(playerLevel.currentLevel == upgradeLevels [1] && !hasUpgraded[1]) {
-			uiManager.showUnlock2 ();
+			uiManager.unlockProjectileButton (2);
 			hasUpgraded[1] = true;
+		}
+
+		if (hasUpgraded[0] && !hasShownUnlock[0] && pDrag.launched) {
+			uiManager.showUnlock1 ();
+			hasShownUnlock[0] = true;
+		} else if (hasUpgraded[1] && !hasShownUnlock[1]&& pDrag.launched) {
+			uiManager.showUnlock2 ();
+			hasShownUnlock[1] = true;
 		}
 	}
 }
