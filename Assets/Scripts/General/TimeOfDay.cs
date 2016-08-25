@@ -9,10 +9,12 @@ public class TimeOfDay : MonoBehaviour {
 	private int currentTime;
 	public float cycleSpeed;
 	private bool isDay;
+	private bool nightActive;
 	private Vector3 sunPosition;
 	public Light sun;
 	public GameObject earth;
 	public SpriteRenderer sky;
+	[Range(6F,100F)]public float skyRate;
 
 	// Day and Night Script for 2d,
 	// Unity needs one empty GameObject (earth) and one Light (sun)
@@ -26,7 +28,7 @@ public class TimeOfDay : MonoBehaviour {
 	void Start() {
 		dayLength = 1440;
 		dayStart = 300;
-		nightStart = 1200;
+		nightStart = 1140;
 		currentTime = 720;
 		StartCoroutine( CalcTime ());
 
@@ -51,21 +53,49 @@ public class TimeOfDay : MonoBehaviour {
 	}
 
 	IEnumerator CalcTime(){
+		float i = 1F;
 		while (true) {
 			currentTime += 1;
 			int hours = Mathf.RoundToInt( currentTime / 60);
 			int minutes = currentTime % 60;
 			//Debug.Log (hours+":"+minutes);
 			//print (Time.timeSinceLevelLoad);
-			if (currentTime % 60 == 0){
-				if (isDay) {
-					sky.color = new Color (sky.color.r, sky.color.g - .08F, sky.color.b - .08F);
-				} else {
-					sky.color = new Color (sky.color.r, sky.color.g + .08F, sky.color.b + .08F);
-				}
+			if (!isDay) {
+				sky.color = new Color (1, 1, 1, i);
+				i -= .00069F*skyRate;
+			} else {
+				sky.color = new Color (1, 1, 1, i);
+				i += .00069F*skyRate;
+			}
+
+			if (i < 0f) {
+				i = 0F;
+			}
+
+			if (i > 1f) {
+				i = 1F;
 			}
 
 			yield return new WaitForSeconds(1F/cycleSpeed);
+		}
+	}
+
+	IEnumerator turnNight(){
+		float i = .99F;
+		print ("ran");
+		while (sky.color.a > 0) {
+			sky.color = new Color (1, 1, 1, i);
+			i -= .001F;
+			yield return new WaitForSeconds (1F / cycleSpeed);
+		}
+	}
+
+	IEnumerator turnDay(){
+		float i = 0F;
+		while (sky.color.a < 1) {
+			sky.color = new Color (1, 1, 1, i);
+			i += .001F;
+			yield return new WaitForSeconds (1F / cycleSpeed);
 		}
 	}
 }
