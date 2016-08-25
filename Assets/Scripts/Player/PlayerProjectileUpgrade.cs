@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerProjectileUpgrade : MonoBehaviour {
 
 	private PlayerLevelController playerLevel;
+	private ProjectileDragging pDrag;
 	public int[] upgradeLevels;
 	private bool[] upgradeShot;
 	private bool[] hasUpgraded;
@@ -12,6 +13,8 @@ public class PlayerProjectileUpgrade : MonoBehaviour {
 	void Start () {
 		if(uiManager == null)
 			uiManager = GameObject.Find ("UIManager").GetComponent<UIManager> ();
+
+
 
 		playerLevel = GetComponent<PlayerLevelController> ();
 
@@ -28,7 +31,9 @@ public class PlayerProjectileUpgrade : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (CheckUpgrade ()) {
-			Upgrade ();
+			pDrag = GameObject.Find ("UIManager").GetComponent<ProjectileSwitcher> ().playerProjectile.GetComponent<ProjectileDragging> ();
+			if(pDrag.launched)
+				Upgrade ();
 		}
 
 	}

@@ -17,7 +17,7 @@ public class ExplosionController : MonoBehaviour {
 	void Update () {
 		transform.localScale = new Vector3(transform.localScale.x+xSpeed, transform.localScale.y+ySpeed, transform.localScale.z);
 
-		if (transform.localScale.x > 10) {
+		if (transform.localScale.x > 3) {
 			Destroy (gameObject);
 		}
 	}

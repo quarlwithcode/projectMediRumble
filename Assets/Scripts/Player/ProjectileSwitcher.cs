@@ -6,12 +6,19 @@ public class ProjectileSwitcher : MonoBehaviour {
 	public GameObject[] projectiles;
 	public int[] projectileAmmo;
 	public PlayerProjectile playerProjectile;
+
+	protected int[] maxAmmo;
 	// Use this for initialization
 	void Start () {
 		turnOnNormalProjectile ();
 		if (projectiles.Length == 0) {
 			projectiles = new GameObject[1];
 			projectiles [0] = GameObject.FindGameObjectWithTag ("Projectile");
+		}
+
+		maxAmmo = new int[projectileAmmo.Length];
+		for (int i = 0; i < projectileAmmo.Length; i++) {
+			maxAmmo[i] = projectileAmmo[i];
 		}
 	}
 	
@@ -90,5 +97,16 @@ public class ProjectileSwitcher : MonoBehaviour {
 
 	public void lowerExplodingAmmo(int shotAmmo){
 		projectileAmmo [2] -= shotAmmo;
+	}
+
+	public void ResetAmmo(){
+		StartCoroutine (AmmoReset (.5F));
+	}
+
+	private IEnumerator AmmoReset(float sec){
+		yield return new WaitForSeconds (sec);
+		for (int i = 0; i < projectileAmmo.Length; i++) {
+			projectileAmmo[i] = maxAmmo[i];
+		}
 	}
 }

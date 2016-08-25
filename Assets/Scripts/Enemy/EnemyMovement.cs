@@ -30,4 +30,8 @@ public class EnemyMovement : MonoBehaviour {
 	protected virtual void OnDisable(){
 		LeanTween.cancel (gameObject);
 	}
+
+	public Vector3 getStopPoint(){
+		return attackStop.position;
+	}
 }
