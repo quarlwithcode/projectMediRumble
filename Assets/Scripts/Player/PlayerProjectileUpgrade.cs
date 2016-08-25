@@ -60,12 +60,16 @@ public class PlayerProjectileUpgrade : MonoBehaviour {
 			hasUpgraded[1] = true;
 		}
 
-		if (hasUpgraded[0] && !hasShownUnlock[0] && pDrag.launched) {
-			uiManager.showUnlock1 ();
-			hasShownUnlock[0] = true;
-		} else if (hasUpgraded[1] && !hasShownUnlock[1]&& pDrag.launched) {
-			uiManager.showUnlock2 ();
-			hasShownUnlock[1] = true;
+		if (hasUpgraded[0] && !hasShownUnlock[0] && !pDrag.clickedOn) {
+			if (!pDrag.launched || (pDrag.launched && pDrag.transform.position.x < 7)) {
+				uiManager.showUnlock1 ();
+				hasShownUnlock [0] = true;
+			}
+		} else if (hasUpgraded[1] && !hasShownUnlock[1] && !pDrag.clickedOn) {
+			if (!pDrag.launched || (pDrag.launched && pDrag.transform.position.x < 7)) {
+				uiManager.showUnlock2 ();
+				hasShownUnlock [1] = true;
+			}
 		}
 	}
 }

@@ -12,7 +12,7 @@ public class ProjectileDragging : MonoBehaviour {
 	private Ray leftCatapultToProjectile;
 	private float maxStretchSqr;
 	private float circleRadius;
-	private bool clickedOn;
+	public bool clickedOn;
 	private Vector2 prevVelocity;
 	public bool launched;
 	public bool isShatterShot;
