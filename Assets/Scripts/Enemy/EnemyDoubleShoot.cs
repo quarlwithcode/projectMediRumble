@@ -3,7 +3,8 @@ using System.Collections;
 
 public class EnemyDoubleShoot : EnemyShoot {
 
-	protected override void AutoAttack(){
+	protected override IEnumerator Shoot(float wait){
+		yield return new WaitForSeconds (wait);
 		GameObject projectileClone;
 		projectileClone = Instantiate (projectile, transform.GetChild (0).position, transform.GetChild (0).rotation) as GameObject;
 		projectileClone.transform.GetChild(1).GetComponent<EnemyProjectile> ().SetDamage(attackDamage);

@@ -11,12 +11,12 @@ public class EnemyAttack : MonoBehaviour {
 	public Transform target;
 	public bool inRange;
 	public LayerMask attackLayer;
-
+	public bool attacking;
 
 	// Use this for initialization
 	protected virtual void Start () {
 		target = GameObject.FindGameObjectWithTag ("Castle").GetComponent<Transform>();
-
+		attacking = false;
 		inRange = false;
 
 		InvokeRepeating ("CheckRange", 0.1f, 0.1f);
@@ -55,6 +55,7 @@ public class EnemyAttack : MonoBehaviour {
 				//print ("Hit");
 				HealthController castleHealth = hit.transform.gameObject.GetComponent<HealthController> ();
 				castleHealth.Damage (attackDamage);
+				attacking = true;
 			}
 		}
 	}
