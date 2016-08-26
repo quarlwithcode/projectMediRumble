@@ -15,6 +15,7 @@ public class TimeOfDay : MonoBehaviour {
 	public GameObject earth;
 	public SpriteRenderer sky;
 	[Range(6F,100F)]public float skyRate;
+	private GameObject[] clouds;
 
 	// Day and Night Script for 2d,
 	// Unity needs one empty GameObject (earth) and one Light (sun)
@@ -26,6 +27,7 @@ public class TimeOfDay : MonoBehaviour {
 
 
 	void Start() {
+		clouds = GameObject.FindGameObjectsWithTag ("Cloud");
 		dayLength = 1440;
 		dayStart = 300;
 		nightStart = 1140;
@@ -35,7 +37,7 @@ public class TimeOfDay : MonoBehaviour {
 	}
 
 	void Update() {
-
+		clouds = GameObject.FindGameObjectsWithTag ("Cloud");
 		if (currentTime > 0 && currentTime < dayStart) {
 			isDay =false;
 			sun.intensity = 0;
@@ -54,6 +56,7 @@ public class TimeOfDay : MonoBehaviour {
 
 	IEnumerator CalcTime(){
 		float i = 1F;
+		float c = 1F;
 		while (true) {
 			currentTime += 1;
 			int hours = Mathf.RoundToInt( currentTime / 60);
@@ -63,9 +66,18 @@ public class TimeOfDay : MonoBehaviour {
 			if (!isDay) {
 				sky.color = new Color (1, 1, 1, i);
 				i -= .00069F*skyRate;
+
+				foreach (GameObject cloud in clouds) {
+					cloud.GetComponent<SpriteRenderer> ().color = new Color (c, c, c, cloud.GetComponent<SpriteRenderer> ().color.a);
+				}
+				c -= .000345F * skyRate;
 			} else {
 				sky.color = new Color (1, 1, 1, i);
 				i += .00069F*skyRate;
+				foreach (GameObject cloud in clouds) {
+					cloud.GetComponent<SpriteRenderer> ().color = new Color (c, c, c, cloud.GetComponent<SpriteRenderer> ().color.a);
+				}
+				c += .000345F * skyRate;
 			}
 
 			if (i < 0f) {
@@ -74,6 +86,14 @@ public class TimeOfDay : MonoBehaviour {
 
 			if (i > 1f) {
 				i = 1F;
+			}
+
+			if (c < .5f) {
+				c = .5F;
+			}
+
+			if (c > 1f) {
+				c = 1F;
 			}
 
 			yield return new WaitForSeconds(1F/cycleSpeed);

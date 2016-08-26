@@ -19,9 +19,14 @@ public class EnemyAnimController : MonoBehaviour {
 
 		if (attackController.attacking) {
 			anim.SetBool ("attack", true);
-			attackController.attacking = false;
+			StartCoroutine (disableAttack ());
 		} else {
 			anim.SetBool ("attack", false);
 		}
+	}
+
+	IEnumerator disableAttack(){
+		yield return new WaitForSeconds (.1F);
+		attackController.attacking = false;
 	}
 }

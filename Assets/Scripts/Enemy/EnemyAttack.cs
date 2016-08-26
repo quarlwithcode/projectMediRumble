@@ -37,7 +37,7 @@ public class EnemyAttack : MonoBehaviour {
 	protected virtual void CheckRange(){
 		//print ("checking for " + target.name);
 
-		if (Vector2.Distance ((Vector2)transform.position, (Vector2)target.position) <= attackRange) {
+		if (Vector2.Distance ((Vector2)transform.position, (Vector2)target.position) <= attackRange && !inRange) {
 			//print ("In Range");
 			inRange = true;
 			InvokeRepeating ("AutoAttack", 0f, attackRate);

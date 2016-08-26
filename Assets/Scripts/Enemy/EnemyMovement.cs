@@ -6,7 +6,7 @@ public class EnemyMovement : MonoBehaviour {
 	protected Transform attackStop;
 	public float movementTimeMin;
 	public float movementTimeMax;
-
+	public int xRange;
 	protected float movementTime;
 	protected EnemyAttack attackController;
 	// Use this for initialization
@@ -17,7 +17,7 @@ public class EnemyMovement : MonoBehaviour {
 		attackController = GetComponent<EnemyAttack> ();
 
 		movementTime = Random.Range (movementTimeMin, movementTimeMax);
-		LeanTween.moveX (gameObject, attackStop.position.x, movementTime);
+		LeanTween.moveX (gameObject, attackStop.position.x+Random.Range(0,xRange), movementTime);
 	}
 	
 	// Update is called once per frame

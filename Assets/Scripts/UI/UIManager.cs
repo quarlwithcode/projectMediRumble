@@ -6,6 +6,7 @@ public class UIManager : MonoBehaviour {
 	private bool lvlStarted;
 	private GameObject startMenu;
 	public GameObject gameOverMenu;
+	public GameObject pauseMenu;
 	public GameObject[] unlockScreens;
 	public GameObject[] projectileButtons;
 	// Use this for initialization
@@ -18,16 +19,41 @@ public class UIManager : MonoBehaviour {
 			gameOverMenu = GameObject.FindGameObjectWithTag ("GameOverMenu");
 		}
 
+		if (pauseMenu == null) {
+			pauseMenu = GameObject.FindGameObjectWithTag ("PauseMenu");
+		}
+		hidePaused ();
 		hideAllUnlock ();
 		hideProjectileButtons ();
 		showStartMenu ();
 		hideGameOverMenu ();
-		print ("ran");
+
+		//print ("ran");
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (Input.GetKeyDown (KeyCode.P)) {
+			PauseControl ();
+		}
+	}
+
+	public void PauseControl(){
+		if (Time.timeScale >= 1 && lvlStarted) {
+			Time.timeScale = 0;
+			showPaused ();
+		} else if (Time.timeScale == 0 && lvlStarted) {
+			Time.timeScale = 1;
+			hidePaused ();
+		}
+	}
+
+	public void showPaused(){
+		pauseMenu.SetActive (true);
+	}
+
+	public void hidePaused(){
+		pauseMenu.SetActive (false);
 	}
 
 	public void hideGameOverMenu(){
@@ -36,10 +62,12 @@ public class UIManager : MonoBehaviour {
 
 	public void showGameOverMenu(){
 		gameOverMenu.SetActive (true);
+		lvlStarted = false;
 	}
 
 	private void hideStartMenu(){
 		startMenu.SetActive (false);
+		lvlStarted = true;
 	}
 
 	private void showStartMenu(){
@@ -102,14 +130,6 @@ public class UIManager : MonoBehaviour {
 				projectileButtons [i].GetComponent<RectTransform> ().position.z);
 		}
 		projectileButtons [button].SetActive (true);
-	}
-
-	public void PauseControl(){
-		if (Time.timeScale == 1) {
-			Time.timeScale = 0;
-		} else if (Time.timeScale == 1) {
-			Time.timeScale = 0;
-		}
 	}
 		
 	public void StartGame(){

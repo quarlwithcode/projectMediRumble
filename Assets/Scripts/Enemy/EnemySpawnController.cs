@@ -38,7 +38,11 @@ public class EnemySpawnController : MonoBehaviour {
 			while(difficultyPoints > 0)
 			{
 				int randEnemy = Random.Range (0, difficultyCap);
-				int enemyDifficulty = enemies [randEnemy].GetComponent<EnemyAttack> ().difficulty;
+				int enemyDifficulty;
+				if(randEnemy == 2)
+					enemyDifficulty = (enemies [randEnemy].GetComponent<EnemyAttack> ().difficulty*6);
+				else 
+					enemyDifficulty = enemies [randEnemy].GetComponent<EnemyAttack> ().difficulty;
 				if (difficultyPoints - enemyDifficulty >= 0) {
 					difficultyPoints -= enemyDifficulty;
 					Instantiate (enemies [randEnemy], new Vector3(transform.position.x, 
