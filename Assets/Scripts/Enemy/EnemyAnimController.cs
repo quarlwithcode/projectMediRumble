@@ -23,6 +23,7 @@ public class EnemyAnimController : MonoBehaviour {
 		} else {
 			anim.SetBool ("attack", false);
 		}
+
 	}
 
 	IEnumerator disableAttack(){
