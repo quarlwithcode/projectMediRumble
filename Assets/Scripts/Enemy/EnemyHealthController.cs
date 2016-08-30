@@ -41,6 +41,9 @@ public class EnemyHealthController : HealthController {
 		pointsController.addPoints ();
 		rig2D.isKinematic = false;
 		rig2D.AddForce (Vector2.up*5, ForceMode2D.Impulse);
+		if (GetComponent<Animator> () != null) {
+			GetComponent<Animator> ().enabled = false;
+		}
 		yield return new WaitForSeconds (time);
 		Destroy (gameObject);
 	}
