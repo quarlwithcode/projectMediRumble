@@ -6,10 +6,13 @@ public class ProjectileSwitcher : MonoBehaviour {
 	public GameObject[] projectiles;
 	public int[] projectileAmmo;
 	public PlayerProjectile playerProjectile;
+	public AudioClip pickup;
+	private AudioSource source;
 
 	protected int[] maxAmmo;
 	// Use this for initialization
 	void Start () {
+		source = GetComponent<AudioSource> ();
 		turnOnNormalProjectile ();
 		if (projectiles.Length == 0) {
 			projectiles = new GameObject[1];
@@ -100,6 +103,7 @@ public class ProjectileSwitcher : MonoBehaviour {
 	}
 
 	public void ResetAmmo(){
+		source.PlayOneShot (pickup, .8F);
 		StartCoroutine (AmmoReset (.5F));
 	}
 

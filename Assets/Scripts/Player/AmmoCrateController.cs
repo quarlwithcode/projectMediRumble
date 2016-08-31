@@ -3,8 +3,10 @@ using System.Collections;
 
 public class AmmoCrateController : MonoBehaviour {
 
+
 	protected ProjectileSwitcher pSwitcher;
 	protected Collider2D[] col2D;
+
 	// Use this for initialization
 	void Start () {
 		pSwitcher = GameObject.Find ("UIManager").GetComponent<ProjectileSwitcher> ();
@@ -20,6 +22,7 @@ public class AmmoCrateController : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.gameObject.tag == "Projectile") {
+			
 			pSwitcher.ResetAmmo ();
 			Destroy (gameObject);
 		}

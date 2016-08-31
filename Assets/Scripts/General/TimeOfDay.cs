@@ -15,7 +15,7 @@ public class TimeOfDay : MonoBehaviour {
 	public GameObject earth;
 	public SpriteRenderer sky;
 	[Range(6F,100F)]public float skyRate;
-	private GameObject[] clouds;
+	private GameObject[] clouds, leaves;
 
 	// Day and Night Script for 2d,
 	// Unity needs one empty GameObject (earth) and one Light (sun)
@@ -28,6 +28,7 @@ public class TimeOfDay : MonoBehaviour {
 
 	void Start() {
 		clouds = GameObject.FindGameObjectsWithTag ("Cloud");
+		leaves = GameObject.FindGameObjectsWithTag ("Leaf");
 		dayLength = 1440;
 		dayStart = 300;
 		nightStart = 1140;
@@ -37,7 +38,8 @@ public class TimeOfDay : MonoBehaviour {
 	}
 
 	void Update() {
-		clouds = GameObject.FindGameObjectsWithTag ("Cloud");
+		
+
 		if (currentTime > 0 && currentTime < dayStart) {
 			isDay =false;
 			sun.intensity = 0;
@@ -58,6 +60,8 @@ public class TimeOfDay : MonoBehaviour {
 		float i = 1F;
 		float c = 1F;
 		while (true) {
+			clouds = GameObject.FindGameObjectsWithTag ("Cloud");
+			leaves = GameObject.FindGameObjectsWithTag ("Leaf");
 			currentTime += 1;
 			int hours = Mathf.RoundToInt( currentTime / 60);
 			int minutes = currentTime % 60;
@@ -70,12 +74,22 @@ public class TimeOfDay : MonoBehaviour {
 				foreach (GameObject cloud in clouds) {
 					cloud.GetComponent<SpriteRenderer> ().color = new Color (c, c, c, cloud.GetComponent<SpriteRenderer> ().color.a);
 				}
+				if (leaves.Length > 0) {
+					foreach (GameObject leaf in leaves) {
+						leaf.GetComponent<SpriteRenderer> ().color = new Color (c, c, c, leaf.GetComponent<SpriteRenderer> ().color.a);
+					}
+				}
 				c -= .000345F * skyRate;
 			} else {
 				sky.color = new Color (1, 1, 1, i);
 				i += .00069F*skyRate;
 				foreach (GameObject cloud in clouds) {
 					cloud.GetComponent<SpriteRenderer> ().color = new Color (c, c, c, cloud.GetComponent<SpriteRenderer> ().color.a);
+				}
+				if (leaves.Length > 0) {
+					foreach (GameObject leaf in leaves) {
+						leaf.GetComponent<SpriteRenderer> ().color = new Color (c, c, c, leaf.GetComponent<SpriteRenderer> ().color.a);
+					}
 				}
 				c += .000345F * skyRate;
 			}

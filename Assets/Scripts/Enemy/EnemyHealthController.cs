@@ -22,6 +22,10 @@ public class EnemyHealthController : HealthController {
 			Kill ();
 			alive = false;
 		}
+
+		if (!alive) {
+			transform.Rotate (Vector3.forward*100F* Time.deltaTime);
+		}
 	}
 
 	protected virtual void onKill ()
@@ -40,7 +44,7 @@ public class EnemyHealthController : HealthController {
 		attackController.enabled = false;
 		pointsController.addPoints ();
 		rig2D.isKinematic = false;
-		rig2D.AddForce (Vector2.up*5, ForceMode2D.Impulse);
+		rig2D.AddForce (Vector2.up*3.5F, ForceMode2D.Impulse);
 		if (GetComponent<Animator> () != null) {
 			GetComponent<Animator> ().enabled = false;
 		}

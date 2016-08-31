@@ -15,7 +15,7 @@ public class ExplosionController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		transform.localScale = new Vector3(transform.localScale.x+xSpeed, transform.localScale.y+ySpeed, transform.localScale.z);
+		transform.localScale = new Vector3(transform.localScale.x+xSpeed*Time.deltaTime, transform.localScale.y+ySpeed*Time.deltaTime, transform.localScale.z);
 
 		if (transform.localScale.x > 3) {
 			Destroy (gameObject);

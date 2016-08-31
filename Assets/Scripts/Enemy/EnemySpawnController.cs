@@ -9,17 +9,22 @@ public class EnemySpawnController : MonoBehaviour {
 	public float spawnWait;
 	public float startWait;
 	public float waveWait;
+	public AudioClip waveHorn;
+	private AudioSource source;
 
 	void Start ()
 	{	
+		source = GetComponent<AudioSource> ();
 		wave = 1;
 		StartCoroutine (SpawnWaves ());
+
 	}
 
 	IEnumerator SpawnWaves ()
 	{
 		//print ("spawn started");
 		yield return new WaitForSeconds (startWait);
+		source.PlayOneShot (waveHorn, .8F);
 //		print ("spawn running1");
 		while (true)
 		{
@@ -43,7 +48,7 @@ public class EnemySpawnController : MonoBehaviour {
 					enemyDifficulty = (enemies [randEnemy].GetComponent<EnemyAttack> ().difficulty*6);
 				else 
 					enemyDifficulty = enemies [randEnemy].GetComponent<EnemyAttack> ().difficulty;
-				if (difficultyPoints - enemyDifficulty >= 0) {
+				if (difficultyPoints - enemyDifficulty >= 0 && enemies [randEnemy].GetComponent<EnemyAttack> ().difficulty <= wave) {
 					difficultyPoints -= enemyDifficulty;
 					Instantiate (enemies [randEnemy], new Vector3(transform.position.x, 
 						enemies[randEnemy].transform.position.y, 
@@ -60,6 +65,7 @@ public class EnemySpawnController : MonoBehaviour {
 
 			yield return new WaitForSeconds (waveWait);
 			wave++;
+			source.PlayOneShot (waveHorn, .8F);
 			yield return new WaitForSeconds (startWait);
 		}
 //		print ("spawn ran");
